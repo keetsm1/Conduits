@@ -59,3 +59,7 @@ def save_connection(email: str, google_sub: str, refresh_token: str, scopes: Lis
             scopes_json = excluded.scopes_json
             """, (email, google_sub, enc_refresh, scopes_json))
         conn.commit()
+
+if __name__ == "__main__":
+    init_db()
+    print("DB Initialized")

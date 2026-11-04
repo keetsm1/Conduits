@@ -62,3 +62,4 @@ def connect_account() -> str:
         scopes=granted_scopes,
     )
     return email
+
