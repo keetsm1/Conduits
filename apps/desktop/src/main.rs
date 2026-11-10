@@ -1,6 +1,8 @@
+use gpui_kit::component::theme::{Theme, ThemeMode};
 use gpui_kit::*;
 
 mod components {
+    pub mod card;
     pub mod sidebar;
 }
 
@@ -42,6 +44,15 @@ fn main() {
         .with_assets(assets::Assets)
         .run(|cx| {
             init(cx);
+
+            // The sidebar paints its own active/hover colors from these tokens.
+            Theme::change(ThemeMode::Dark, None, cx);
+            let theme = Theme::global_mut(cx);
+            theme.tokens.sidebar = Hsla::from(rgb(0x12141A)).into();
+            theme.tokens.sidebar_foreground = Hsla::from(rgb(0x8A8F9D)).into();
+            theme.tokens.sidebar_accent = Hsla::from(rgb(0x232833)).into();
+            theme.tokens.sidebar_accent_foreground = Hsla::from(rgb(0xFFFFFF)).into();
+            theme.tokens.sidebar_border = Hsla::from(rgb(0x262B36)).into();
 
             open_window(WindowOptions::default(), cx, |_, cx| {
                 cx.new(|_| HelloWorld {
