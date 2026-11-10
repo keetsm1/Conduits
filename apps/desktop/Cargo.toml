@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 gpui-kit = "0.8.1"
+reqwest = { version = "0.12", features = ["blocking"] }
 
 # gpui-pre-macos 0.3.10 uses `Option::map_or_default`, which is unstable on
 # stable Rust. Use a local copy with the stable equivalent instead.

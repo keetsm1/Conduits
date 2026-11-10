@@ -10,10 +10,15 @@ mod pages {
     pub mod connectors;
 }
 
+mod helpers{
+    pub mod connect_google;
+}
+
 use components::sidebar::{Page, sidebar};
 
 struct HelloWorld {
     current_page: Page,
+    connectors: Entity<pages::connectors::ConnectorsPage>,
 }
 
 impl Render for HelloWorld {
@@ -33,7 +38,7 @@ impl Render for HelloWorld {
             .child(
                 div().flex_1().child(match self.current_page {
                     Page::Dashboard => "Hello, World!".into_any_element(),
-                    Page::Connectors => pages::connectors::render().into_any_element(),
+                    Page::Connectors => self.connectors.clone().into_any_element(),
                 }),
             )
     }
@@ -55,8 +60,9 @@ fn main() {
             theme.tokens.sidebar_border = Hsla::from(rgb(0x262B36)).into();
 
             open_window(WindowOptions::default(), cx, |_, cx| {
-                cx.new(|_| HelloWorld {
+                cx.new(|cx| HelloWorld {
                     current_page: Page::Dashboard,
+                    connectors: cx.new(|_| pages::connectors::ConnectorsPage::new()),
                 })
             })
             .expect("Failed to open window");
